@@ -1,4 +1,4 @@
 import {createClient} from '@supabase/supabase-js';
 const url=import.meta.env.VITE_SUPABASE_URL,key=import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const configured=Boolean(url&&key);
-export const supabase=createClient(url||'http://localhost','anon-missing',{auth:{persistSession:true,autoRefreshToken:true}});
+export const supabase=createClient(url||'http://localhost',key||'anon-missing',{auth:{persistSession:true,autoRefreshToken:true}});
