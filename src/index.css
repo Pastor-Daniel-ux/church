@@ -1,0 +1,7 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+body{@apply bg-sand text-ink font-sans}h1,h2,h3{@apply font-serif}
+.btn{@apply inline-flex items-center justify-center rounded-md bg-olive px-4 py-2 font-medium text-white hover:bg-olive/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:opacity-50}
+.btn-alt{@apply bg-white text-ink border border-ink/20 hover:bg-ink/5}
+.input{@apply w-full rounded-md border border-ink/30 bg-white px-3 py-2 focus:outline focus:outline-2 focus:outline-gold}
+.card{@apply rounded-lg bg-white p-5 border border-ink/10}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
