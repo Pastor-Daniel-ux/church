@@ -47,7 +47,7 @@ function Crud({cfg}){
     <div className="flex gap-2"><button className="btn">Save</button><button type="button" className="btn btn-alt" onClick={()=>setEd(null)}>Cancel</button></div></form>;
   return <div><button className="btn mb-4" onClick={()=>setEd({published:true})}>Add new</button>
     <State q={q} empty="Nothing here yet. Add your first item.">{d=><ul className="space-y-2">{d.map(r=><li key={r.id} className="card flex items-center justify-between"><span>{r[cfg.title]}{r.published===false&&' (draft)'}</span>
-      <span className="flex gap-2"><button className="btn btn-alt" onClick={()=>setEd({...r,social_links:JSON.stringify(r.social_links||{})})}>Edit</button><button className="btn btn-alt" onClick={()=>del(r)}>Delete</button></span></li>)}</ul>}</State></div>;
+      <span className="flex gap-2"><button className="btn btn-alt" onClick={()=>setEd({...r,...Object.fromEntries(cfg.fields.filter(f=>f.t==='json').map(f=>[f.k,JSON.stringify(r[f.k]||{})]))})}>Edit</button><button className="btn btn-alt" onClick={()=>del(r)}>Delete</button></span></li>)}</ul>}</State></div>;
 }
 function Inbox({table,statuses}){
   const toast=useToast(),q=useAsync(()=>list(table),[table]);

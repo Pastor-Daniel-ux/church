@@ -1,5 +1,7 @@
-import {useState} from 'react';import {NavLink,Link,Outlet} from 'react-router-dom';
-import {getSettings} from '../services/db';import {useAsync} from './ui';
+import {useState} from 'react';
+import {NavLink,Link,Outlet} from 'react-router-dom';
+import {getSettings} from '../services/db';
+import {useAsync} from './ui';
 const links=[['/','Home'],['/about','About'],['/ministries','Ministries'],['/sermons','Sermons'],['/events','Events'],['/give','Give'],['/prayer','Prayer'],['/contact','Contact']];
 export default function Layout(){
   const [open,setOpen]=useState(false);const {data:s}=useAsync(getSettings);
