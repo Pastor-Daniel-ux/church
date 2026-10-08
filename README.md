@@ -11,6 +11,9 @@
 3. Auth > URL Configuration: add your site URL and `<site>/admin/reset` as redirect URLs (needed for password reset).
 4. Sign-ups: disable public sign-ups under Auth > Providers > Email so only invited users exist.
 
+## Add ministry photo galleries to an existing database
+Do not rerun the full schema against an existing project. In Supabase SQL Editor, run `supabase/add_ministry_gallery.sql` to add the `gallery_urls` column to the existing `ministries` table without replacing any rows or user data. Admins can then edit a ministry, upload multiple additional photos, and visitors can open that ministry's detail page to view them.
+
 ## First admin
 1. Auth > Users > Add user (email + password, auto-confirm).
 2. SQL Editor: `update profiles set role='admin' where email='you@example.com';`

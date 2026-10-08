@@ -23,7 +23,7 @@ export function Home(){
     {c.verse&&<Section><blockquote className="card text-xl font-serif">{c.verse}</blockquote></Section>}
     <Section title="Upcoming events"><State q={ev} empty="No upcoming events yet. Check back soon.">{d=><Grid>{d.map(EventCard)}</Grid>}</State></Section>
     <Section title="Latest sermons"><State q={se} empty="No sermons posted yet.">{d=><Grid>{d.map(SermonCard)}</Grid>}</State></Section>
-    <Section title="Ministries"><State q={mi} empty="Ministries coming soon.">{d=><Grid>{d.map(m=><article key={m.id} className="card"><h3 className="text-xl">{m.name}</h3><p className="line-clamp-3">{m.description}</p></article>)}</Grid>}</State>
+    <Section title="Ministries"><State q={mi} empty="Ministries coming soon.">{d=><Grid>{d.map(m=><article key={m.id} className="card"><Link to={`/ministries/${m.id}`} className="block hover:underline"><Img src={m.image_url} alt={m.name}/><h3 className="mt-3 text-xl">{m.name}</h3><p className="line-clamp-3">{m.description}</p><span className="mt-3 inline-block text-sm underline">View photos and details</span></Link></article>)}</Grid>}</State>
       <Link to="/ministries" className="btn btn-alt mt-4">See all ministries</Link></Section>
     <Section className="text-center"><h2 className="text-3xl">New here? We saved you a seat.</h2><div className="mt-5 flex justify-center gap-3"><Link to="/visit" className="btn">Plan your visit</Link><Link to="/give" className="btn btn-alt">Give online</Link></div></Section>
     <Section title="Find us"><address className="not-italic">{c.address}<br/>{c.phone} · {c.email}</address></Section></Page>;
@@ -43,8 +43,17 @@ export function Visit(){
 }
 export function Ministries(){
   const q=useAsync(()=>list('ministries',{by:'name',asc:true}));
-  return <Page title="Ministries"><Section title="Ministries"><State q={q} empty="No ministries listed yet.">{d=><Grid>{d.map(m=><article key={m.id} className="card"><Img src={m.image_url} alt=""/><h3 className="mt-3 text-xl">{m.name}</h3><p>{m.description}</p>
+  return <Page title="Ministries"><Section title="Ministries"><State q={q} empty="No ministries listed yet.">{d=><Grid>{d.map(m=><article key={m.id} className="card"><Link to={`/ministries/${m.id}`} className="block hover:underline"><Img src={m.image_url} alt={m.name}/><h3 className="mt-3 text-xl">{m.name}</h3><p>{m.description}</p><span className="mt-3 inline-block text-sm underline">View photos and details</span></Link>
     {m.meeting_time&&<p className="mt-2 text-sm">Meets: {m.meeting_time}</p>}{m.contact_email&&<a className="text-sm underline" href={`mailto:${m.contact_email}`}>{m.contact_email}</a>}</article>)}</Grid>}</State></Section></Page>;
+}
+export function MinistryDetail(){
+  const {id}=useParams(),q=useAsync(()=>get('ministries',id),[id]);
+  return <Page title="Ministry"><Section><State q={q} empty="Ministry not found.">{m=>{document.title=m.name;return <article className="space-y-6">
+    <Link to="/ministries" className="underline">All ministries</Link><div className="max-w-3xl space-y-4">
+      <Img src={m.image_url} alt={m.name}/><h1 className="text-4xl">{m.name}</h1><p className="whitespace-pre-line">{m.description}</p>
+      {m.meeting_time&&<p>Meets: {m.meeting_time}</p>}{m.contact_email&&<a className="underline" href={`mailto:${m.contact_email}`}>{m.contact_email}</a>}</div>
+    {m.gallery_urls?.length>0&&<section aria-labelledby="ministry-photos"><h2 id="ministry-photos" className="mb-4 text-3xl">Photos</h2><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{m.gallery_urls.map((url,i)=><img key={`${url}-${i}`} src={url} alt={`${m.name} photo ${i+1}`} loading="lazy" className="h-64 w-full rounded-md object-cover"/>)}</div></section>}
+  </article>}}</State></Section></Page>;
 }
 export function Sermons(){
   const q=useAsync(()=>list('sermons',{by:'sermon_date'})),[f,setF]=useState({s:'',sp:'',cat:'',from:''});

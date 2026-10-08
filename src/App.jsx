@@ -5,7 +5,7 @@ import * as P from './pages/Public';import Dashboard,{Login,Reset} from './pages
 export default function App(){
   if(!configured)return <p role="alert" className="p-8">Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY. Copy .env.example to .env and fill them in.</p>;
   return <Routes><Route element={<Layout/>}>
-    <Route index element={<P.Home/>}/><Route path="about" element={<P.About/>}/><Route path="visit" element={<P.Visit/>}/><Route path="ministries" element={<P.Ministries/>}/>
+    <Route index element={<P.Home/>}/><Route path="about" element={<P.About/>}/><Route path="visit" element={<P.Visit/>}/><Route path="ministries" element={<P.Ministries/>}/><Route path="ministries/:id" element={<P.MinistryDetail/>}/>
     <Route path="sermons" element={<P.Sermons/>}/><Route path="sermons/:id" element={<P.SermonDetail/>}/><Route path="events" element={<P.Events/>}/><Route path="events/:id" element={<P.EventDetail/>}/>
     <Route path="give" element={<P.Give/>}/><Route path="prayer" element={<P.Prayer/>}/><Route path="contact" element={<P.Contact/>}/>
     <Route path="admin/login" element={<Login/>}/><Route path="admin/reset" element={<Reset/>}/>
